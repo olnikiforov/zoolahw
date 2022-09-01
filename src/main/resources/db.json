@@ -1,0 +1,27 @@
+{
+  "table5": {
+    "surname": "Scott",
+    "name": "John",
+    "position": "Senior Java Dev"
+  },
+  "table4": {
+    "surname": "Scott",
+    "name": "Slavik",
+    "position": "Junior Java Dev"
+  },
+  "table3": {
+    "surname": "Chan",
+    "name": "Maria",
+    "position": "Product Manager"
+  },
+  "table2": {
+    "surname": "Scott",
+    "name": "John",
+    "position": "Senior Java Dev"
+  },
+  "table1": {
+    "surname": "Nikiforov",
+    "name": "Alex",
+    "position": "Delivery Manager"
+  }
+}
