@@ -1,7 +1,7 @@
-package com.academy.zoolahw.Web;
+package com.academy.zoolahw.web;
 
-import com.academy.zoolahw.File.JsonFileWorker;
-import com.academy.zoolahw.Utils.Utils;
+import com.academy.zoolahw.file.UserRepository;
+import com.academy.zoolahw.utils.Utils;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,8 +13,8 @@ import java.io.IOException;
 @WebServlet(name = "tablesServlet", value = "/tables")
 public class TablesServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        JsonFileWorker jsonFileWorker = new JsonFileWorker(response);
-        String result = jsonFileWorker.getPeople();
+        UserRepository userRepository = new UserRepository();
+        String result = userRepository.getUsers();
         Utils.pageOutput(response, result);
     }
 }

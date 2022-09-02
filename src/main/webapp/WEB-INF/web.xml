@@ -5,7 +5,7 @@
          version="4.0">
     <filter>
         <filter-name>myFilter</filter-name>
-        <filter-class>com.academy.zoolahw.Web.CheckLoginFilter</filter-class>
+        <filter-class>com.academy.zoolahw.web.CheckLoginFilter</filter-class>
     </filter>
 
     <filter-mapping>

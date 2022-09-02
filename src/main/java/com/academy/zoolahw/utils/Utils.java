@@ -1,4 +1,4 @@
-package com.academy.zoolahw.Utils;
+package com.academy.zoolahw.utils;
 
 import jakarta.servlet.http.HttpServletResponse;
 

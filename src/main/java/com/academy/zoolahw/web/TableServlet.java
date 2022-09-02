@@ -1,7 +1,7 @@
-package com.academy.zoolahw.Web;
+package com.academy.zoolahw.web;
 
-import com.academy.zoolahw.File.JsonFileWorker;
-import com.academy.zoolahw.Utils.Utils;
+import com.academy.zoolahw.file.UserRepository;
+import com.academy.zoolahw.utils.Utils;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,10 +18,7 @@ public class TableServlet extends HttpServlet {
     public JsonFileWorker jsonFileWorker;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String path = getPath(request);
-        jsonFileWorker = new JsonFileWorker(response);
-        JSONObject table = jsonFileWorker.getPerson(path);
-
+        JSONObject table = userRepository.getUser(request.getPathInfo());
         if (table != null) {
             Utils.pageOutput(response, table);
         } else {
@@ -30,30 +27,36 @@ public class TableServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String path = getPath(request);
-        jsonFileWorker = new JsonFileWorker(response);
-        if (jsonFileWorker.isPathNull(path)) {
-            jsonFileWorker.createPerson(path, getBody(request, response));
+        if (userRepository.isPathNull(request.getPathInfo())) {
+            try {
+                userRepository.createUser(request.getPathInfo(), getBody(request, response));
+            } catch (IOException e) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
         } else {
             response.sendError(HttpServletResponse.SC_CONFLICT);
         }
     }
 
     public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String path = getPath(request);
-        jsonFileWorker = new JsonFileWorker(response);
-        if (!jsonFileWorker.isPathNull(path)) {
-            jsonFileWorker.updatePerson(path, getBody(request, response));
+        if (!userRepository.isPathNull(request.getPathInfo())) {
+            try {
+                userRepository.updateUser(request.getPathInfo(), getBody(request, response));
+            } catch (IOException e) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
     public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String path = getPath(request);
-        jsonFileWorker = new JsonFileWorker(response);
-        if (!jsonFileWorker.isPathNull(path)) {
-            jsonFileWorker.deletePerson(path);
+        if (!userRepository.isPathNull(request.getPathInfo())) {
+            try {
+                userRepository.deleteUser(request.getPathInfo());
+            } catch (IOException e) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
@@ -79,11 +82,5 @@ public class TableServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return null;
-    }
-
-    public static String getPath(HttpServletRequest request) {
-        String pathWithSlash = request.getPathInfo();
-        int lenPath = pathWithSlash.length();
-        return pathWithSlash.substring(1, lenPath);
     }
 }

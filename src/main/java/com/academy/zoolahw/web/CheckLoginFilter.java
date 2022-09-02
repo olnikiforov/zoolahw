@@ -1,4 +1,4 @@
-package com.academy.zoolahw.Web;
+package com.academy.zoolahw.web;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

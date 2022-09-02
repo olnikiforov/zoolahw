@@ -1,4 +1,4 @@
-package com.academy.zoolahw.Web;
+package com.academy.zoolahw.web;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
