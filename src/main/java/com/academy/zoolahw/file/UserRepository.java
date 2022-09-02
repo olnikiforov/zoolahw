@@ -69,4 +69,10 @@ public class UserRepository {
         String path = getPath(pathWithSlash);
         return people.get(path) == null;
     }
+
+    private void updatePeopleFile() throws IOException {
+        FileWriter fileWriter = new FileWriter(DBPATH);
+        fileWriter.write(people.toJSONString());
+        fileWriter.close();
+    }
 }
