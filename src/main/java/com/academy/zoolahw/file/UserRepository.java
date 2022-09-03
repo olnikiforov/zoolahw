@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class UserRepository {
     private static final String DBPATH = "/home/shs/Documents/zoolahw/src/main/resources/db.json";
@@ -30,7 +31,7 @@ public class UserRepository {
     }
 
     public String getUsers() {
-        ArrayList<String> peopleArray = new ArrayList<>();
+        List<String> peopleArray = new ArrayList<>();
         Iterator<String> keys = people.keySet().iterator();
         while (keys.hasNext()) {
             String key = keys.next();
@@ -44,20 +45,20 @@ public class UserRepository {
     public void createUser(String pathWithSlash, JSONObject jsonBody) throws IOException {
         String path = getPath(pathWithSlash);
         people.put(path, jsonBody);
-        updatePeopleFile();
+        updateFile();
     }
 
     public void updateUser(String pathWithSlash, JSONObject jsonBody) throws IOException {
         String path = getPath(pathWithSlash);
         people.remove(path);
         people.put(path, jsonBody);
-        updatePeopleFile();
+        updateFile();
     }
 
     public void deleteUser(String pathWithSlash) throws IOException {
         String path = getPath(pathWithSlash);
         people.remove(path);
-        updatePeopleFile();
+        updateFile();
     }
 
     private String getPath(String pathWithSlash) {
@@ -65,12 +66,12 @@ public class UserRepository {
         return pathWithSlash.substring(1, lenPath);
     }
 
-    public boolean isPathNull(String pathWithSlash) {
+    public boolean isUserExist(String pathWithSlash) {
         String path = getPath(pathWithSlash);
-        return people.get(path) == null;
+        return people.get(path) != null;
     }
 
-    private void updatePeopleFile() throws IOException {
+    private void updateFile() throws IOException {
         FileWriter fileWriter = new FileWriter(DBPATH);
         fileWriter.write(people.toJSONString());
         fileWriter.close();
